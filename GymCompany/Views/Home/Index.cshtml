@@ -1,0 +1,13 @@
+﻿@using GymCompany.Models
+
+@{ 
+    ApplicationDbContext db = new ApplicationDbContext();
+    var users = db.Users.ToList();
+}
+
+@{ 
+    foreach(var e in users)
+    {
+        <p>@e.Email</p>
+    }
+}

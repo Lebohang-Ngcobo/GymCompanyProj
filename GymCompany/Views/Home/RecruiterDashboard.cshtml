@@ -1,0 +1,359 @@
+﻿@using GymCompany.Models
+@{
+    ViewBag.Title = "ManagerDashboard";
+    Layout = "~/Views/Shared/_Manager.cshtml";
+    var msg = TempData["AlertMessage"] ?? string.Empty;
+    Logic lo = new Logic();
+}
+
+<script type="text/javascript">
+    var message = '@msg';
+    if(message)
+        alert(message)
+</script>
+
+<script>
+function changeFunction() {
+    var x = document.getElementById("nat").value;
+    if(x=="Local")
+    {
+        document.getElementById('idno').style.display = 'block';
+        document.getElementById('passport').style.display = 'none';
+
+    }
+    else if (x == "Interntional") {
+        document.getElementById('passport').style.display = 'block';
+        document.getElementById('idno').style.display = 'none';
+
+
+    }
+
+}
+
+function Show()
+{
+    document.getElementById('nok').style.display = 'block';
+}
+</script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+<div style="padding-left:20px;padding-right:20px">
+    <h3>Recruiter Dashboard</h3>
+    <div class="w3-bar w3-black" style="padding-left:20px;padding-right:20px;width:70%">
+        <button class="w3-bar-item w3-button" onclick="openCity('dut')">Manage Leads</button>
+        <button class="w3-bar-item w3-button" onclick="openCity('London')">Manage Clients</button>
+        <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Client Next of Kin</button>
+        @*<button class="w3-bar-item w3-button" onclick="openCity('fra')">Client Occupation</button>*@
+    </div>
+
+    <div id="dut" class="w3-container city" style="border:1px solid black;width:70%">
+        <h2>Manage Leads</h2>
+
+        <p>Add New Lead Client</p>
+        @using (Html.BeginForm("Create", "Leads", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="text" name="fname" class="" w3-input w3-border" placeholder="First Name" required />
+            <br /><br />
+            <input type="text" name="lanme" class="" w3-input w3-border" placeholder="Last Name" required />
+            <br /><br />
+            <input type="text" name="cno" class="" w3-input w3-border" placeholder="Contact Number" required />
+
+            <br /><br />
+            <button type="submit" class="w3-button w3-blue" onclick="Show()">Save Details</button>
+            <br /><br />
+
+        }
+
+        <br />
+        <p>Leads</p>
+
+        <table class="table table-striped table-bordered">
+            <tr>
+                <td>Full Name</td>
+                <td>Contact</td>
+                <td>Status</td>
+                <td>Date Updated</td>
+                <td>Update Status</td>
+            </tr>
+
+            @{ 
+                foreach(var e in lo.myLeads(User.Identity.Name))
+                {
+                    <tr>
+                        <td>@e.fname @e.lanme</td>
+                        <td>@e.cno</td>
+                        <td>@e.status</td>
+                        <td>@e.dateupdated</td>
+                        <td>
+                            @{ 
+                                if(e.status=="Pending")
+                                {
+                                    using (Html.BeginForm("updateStatus", "Clients", FormMethod.Post))
+                                    {
+                                        <input type="text" name="lid" value="@e.lID" hidden />
+                                        <button type="submit" class="w3-button w3-blue" onclick="Show()">Approve Lead</button>
+
+                                    }
+
+                                    <br /><br />
+                                    using (Html.BeginForm("Decline", "Clients", FormMethod.Post))
+                                    {
+                                        <input type="text" name="lid" value="@e.lID" hidden />
+                                        <button type="submit" class="w3-button w3-red" onclick="Show()">Decline Lead</button>
+
+                                    }
+                                }
+                                else 
+                                {
+                                    <p>@e.status</p>
+                                }
+                            }
+                        </td>
+                    </tr>
+
+                }
+            }
+        </table>
+    </div>
+
+
+    <div id="London" class="w3-container city" style="border:1px solid black;width:70%">
+        <h2>Manage Clients</h2>
+
+        <p>Add New Client</p>
+
+       
+        <div class="row">
+            @using (Html.BeginForm("Create", "Clients", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-sm-12" style="background-color:lavender;">
+                    <br />
+                    <label>Personal Details</label>
+                    <br />
+                    <select name="clientTitle" class="" w3-input w3-border">
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Ms">Ms</option>
+                    </select>
+                    <br />
+                    <br />
+                    <input type="text" name="clientFname" class="" w3-input w3-border" placeholder="First Name" required />
+                    <br />
+                    <br />
+                    <input type="text" name="clientLname" class="" w3-input w3-border" placeholder="Last Name" required />
+                    
+                 
+                    <br /><br />
+                    <label>Citizenship</label><br />
+                    <select id="nat" class="" w3-input w3-border" onchange="changeFunction()">
+                        <option value="Local">South African Citizen</option>
+                        <option value="Interntional">International Citizen</option>
+                    </select>
+                    <div id="idno">
+                        <br />
+                        <input type="number" name="IDno" class="" w3-input w3-border" placeholder="ID Number" />
+                    </div>
+
+                    <div id="passport" style="display:none">
+                        <br />
+                        <input type="number" name="passportno" class="" w3-input w3-border" placeholder="Passwport Number" />
+                    </div>
+                    <br />
+                    <input type="email" name="email" class="" w3-input w3-border" placeholder="Email" required />
+                    <br />
+                    <br />
+                    <input type="text" name="postalAddress" class="" w3-input w3-border" placeholder="Postal Address" required />
+                    <br />
+                    <br />
+
+                    <input type="number" name="postalCode" class="" w3-input w3-border" placeholder="Postal Code" required />
+                    <br />
+                    <br />
+
+                    <input type="number" name="hometel" class="" w3-input w3-border" placeholder="Home Telephone" required />
+                    <br />
+                    <br />
+
+                    <input type="number" name="cellno" class="" w3-input w3-border" placeholder="Cell Number" required />
+                    <br />
+                    <br />
+                    <label>Select Package</label>
+                    <br />
+                    <select name="pID" class="" w3-input w3-border">
+
+                        @{
+                            foreach (var e in lo.getPackages())
+                            {
+                                <option value="@e.pID">@e.type</option>
+                            }
+                        }
+
+                    </select>
+                    <br />
+                    <br />
+
+                    <label>Requires Personal Trainer?</label>
+
+                    <input type="radio" name="personatrainer" value="Yes" /> <span>Yes</span>
+                    <span><input type="radio" name="personatrainer" value="Yes" /> No</span>
+                    <br /><br />
+                    <button type="submit" class="w3-button w3-blue" onclick="Show()">Save Details</button>
+                    <br /><br />
+                </div>
+                            }
+
+
+
+
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <td style="font-weight:bold">Full Name</td>
+                    <td style="font-weight:bold">Identity</td>
+                    <td style="font-weight:bold">Address</td>
+                    <td style="font-weight:bold">Cell</td>
+                    <td style="font-weight:bold">Email</td>
+                    <td style="font-weight:bold">Date Registered</td>
+
+                </tr>
+                @{
+                    foreach (var e in lo.getClients())
+                    {
+                        <tr>
+                            <td>@e.clientFname @e.clientLname</td>
+                            @{
+                                if (e.IDno == null)
+                                {
+                                    <td>@e.passportno</td>
+                                }
+                                else
+                                {
+                                    <td>@e.IDno</td>
+                                }
+                            }
+
+                            <td>@e.postalAddress, @e.postalCode</td>
+                            <td>@e.cellno</td>
+                            <td>@e.email</td>
+                            <td>@e.date_reg</td>
+                            
+                            
+
+                        </tr>
+                                    }
+                }
+            </table>
+
+        </div>
+    </div>
+
+
+
+    <div id="Paris" class="w3-container city" style="border:1px solid black;width:70%;display:none">
+        <div class="col-sm-12" style="background-color:lavenderblush;">
+            <br />
+            <label>Next of Kin Details</label>
+            <br />
+            @using (Html.BeginForm("Create", "NextOfKins", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div id="nok">
+                    <label>Client</label>
+                    <select id="clientID" class="" w3-input w3-border">
+                        @{
+                            foreach (var e in lo.getClients())
+                            {
+                                <option value="@e.clientID">@e.clientLname @e.clientFname</option>
+                            }
+                        }
+                    </select>
+                    <br /><br />
+                    <input type="text" name="fname" class="" w3-input w3-border" placeholder="Email" required />
+                    <br />
+                    <br />
+                    <input type="text" name="lname" class="" w3-input w3-border" placeholder="Postal Address" required />
+                    <br />
+                    <br />
+
+                    <input type="number" name="tel" class="" w3-input w3-border" placeholder="Postal Code" required />
+                    <br />
+                    <br />
+
+                    <label>Relationship With Client</label>
+                    <br />
+                    <select id="assoc" class="" w3-input w3-border">
+                        <option value="Brother">Brother</option>
+                        <option value="Sister">Sister</option>
+                        <option value="Parent">Parent</option>
+                        <option value="Guardian">Guardian</option>
+
+                    </select>
+                    <br />
+                    <br />
+                   
+                    <button type="submit" class="w3-button w3-blue">Save Details</button>
+                    <br /><br />
+                </div>
+                            }
+
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <td style="font-weight:bold">NOK Full Name</td>
+                    <td style="font-weight:bold">Telephone</td>
+
+                    <td style="font-weight:bold">Date Registered</td>
+                    @*<td style="font-weight:bold">Client Dteails</td>*@
+
+
+                </tr>
+                @{
+                    foreach (var e in lo.kin())
+                    {
+                        <tr>
+                            
+                            <td>@e.Fname @e.Lname</td>
+                            <td>@e.tel</td>
+                            <td>@e.date_reg</td>
+                            @*<td>@lo.getById(@e.clientID).clientFname @lo.getById(@e.clientID).clientFname </td>*@
+                            <td></td>
+
+                        </tr>
+                                }
+                }
+            </table>
+
+
+
+        </div>
+
+    </div>
+
+
+    @*<div id="Paris" class="w3-container city" style="border:1px solid black;width:70%;display:none">
+            <br />
+            <label>Client Occupation</label>
+    </div>*@
+
+
+        </div>
+
+
+        <script>
+            function openCity(cityName) {
+                var i;
+                var x = document.getElementsByClassName("city");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                document.getElementById(cityName).style.display = "block";
+            }
+        </script>
+
+
+
+

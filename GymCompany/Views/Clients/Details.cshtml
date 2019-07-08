@@ -1,0 +1,146 @@
+﻿@model GymCompany.Models.Client
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NextOfKin.Fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NextOfKin.Fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Package.type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Package.type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.clientTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clientTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.clientFname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clientFname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.clientLname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clientLname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.passportno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passportno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postalAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postalAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hometel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hometel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cellno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cellno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.requirepersonal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.requirepersonal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_reg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_reg)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.clientID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

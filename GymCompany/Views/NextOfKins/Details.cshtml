@@ -1,0 +1,66 @@
+﻿@model GymCompany.Models.NextOfKin
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NextOfKin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.clientTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.clientTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.assoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.assoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_reg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_reg)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.nID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

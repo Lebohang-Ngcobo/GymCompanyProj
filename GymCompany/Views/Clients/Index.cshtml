@@ -1,0 +1,123 @@
+﻿@model IEnumerable<GymCompany.Models.Client>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.fname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextOfKin.Fname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Package.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.clientTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.clientFname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.clientLname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passportno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.postalAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.postalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hometel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cellno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.requirepersonal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_reg)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.fname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NextOfKin.Fname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Package.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.clientTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.clientFname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.clientLname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passportno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.postalAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.postalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hometel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cellno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.requirepersonal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_reg)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.clientID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.clientID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.clientID })
+        </td>
+    </tr>
+}
+
+</table>
