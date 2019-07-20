@@ -15,6 +15,17 @@ namespace GymCompany.Models
             return db.Employees.ToList();
         }
 
+        public List<Employee> getTrainers()
+        {
+            return db.Employees.ToList().FindAll(x=>x.position.ToLower()=="trainer");
+        }
+
+        public Employee getTrainer(string clientID, string empid)
+        {
+            Client cl = db.Clients.ToList().Find(x => x.clientID == clientID);
+            return db.Employees.ToList().Find(x => x.position.ToLower() == "trainer" && x.empID==cl.empID);
+        }
+
         public List<Package> getPackages()
         {
             return db.Packages.ToList();

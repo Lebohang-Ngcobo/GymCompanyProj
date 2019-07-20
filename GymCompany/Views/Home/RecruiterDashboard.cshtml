@@ -6,34 +6,84 @@
     Logic lo = new Logic();
 }
 
+<style>
+    ul{
+        margin-left:-50px;
+        margin-bottom:50px;
+    }
+
+    #profile {
+        width: 200px;
+        height:200px;
+        border: 1px solid black;
+        margin-left:10px;
+        float:left;
+        list-style:none;
+
+    }
+
+       #profile img{
+        width: 100px;
+        height:100px;
+        margin-top:10%;
+        margin-left:25%;
+
+    }
+
+    #profile p{
+        margin-top:5%;
+        text-align:center;
+    }
+</style>
+
 <script type="text/javascript">
     var message = '@msg';
-    if(message)
+    if (message)
         alert(message)
 </script>
 
 <script>
-function changeFunction() {
-    var x = document.getElementById("nat").value;
-    if(x=="Local")
-    {
-        document.getElementById('idno').style.display = 'block';
-        document.getElementById('passport').style.display = 'none';
-
-    }
-    else if (x == "Interntional") {
-        document.getElementById('passport').style.display = 'block';
-        document.getElementById('idno').style.display = 'none';
-
-
+    function ShowTrainers() {
+        document.getElementById('personaltrainers').style.display = 'inline-block';
     }
 
-}
+    function HideTrainers() {
+        document.getElementById('personaltrainers').style.display = 'none';
+    }
 
-function Show()
-{
-    document.getElementById('nok').style.display = 'block';
-}
+ 
+</script>
+
+<script>
+    function appendID() {
+
+        var rad = document.getElementById('empradio');
+        
+        var txt = document.getElementById('empidtxt');
+        txt.value = rad.value;
+    }
+</script>
+
+<script>
+    function changeFunction() {
+        var x = document.getElementById("nat").value;
+        if (x == "Local") {
+            document.getElementById('idno').style.display = 'block';
+            document.getElementById('passport').style.display = 'none';
+
+        }
+        else if (x == "Interntional") {
+            document.getElementById('passport').style.display = 'block';
+            document.getElementById('idno').style.display = 'none';
+
+
+        }
+
+    }
+
+    function Show() {
+        document.getElementById('nok').style.display = 'block';
+    }
 </script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -81,8 +131,8 @@ function Show()
                 <td>Update Status</td>
             </tr>
 
-            @{ 
-                foreach(var e in lo.myLeads(User.Identity.Name))
+            @{
+                foreach (var e in lo.myLeads(User.Identity.Name))
                 {
                     <tr>
                         <td>@e.fname @e.lanme</td>
@@ -90,8 +140,8 @@ function Show()
                         <td>@e.status</td>
                         <td>@e.dateupdated</td>
                         <td>
-                            @{ 
-                                if(e.status=="Pending")
+                            @{
+                                if (e.status == "Pending")
                                 {
                                     using (Html.BeginForm("updateStatus", "Clients", FormMethod.Post))
                                     {
@@ -108,7 +158,7 @@ function Show()
 
                                     }
                                 }
-                                else 
+                                else
                                 {
                                     <p>@e.status</p>
                                 }
@@ -116,18 +166,18 @@ function Show()
                         </td>
                     </tr>
 
-                }
+                                }
             }
         </table>
     </div>
 
 
-    <div id="London" class="w3-container city" style="border:1px solid black;width:70%">
+    <div id="London" class="w3-container city" style="border:1px solid black;width:70%;display:none">
         <h2>Manage Clients</h2>
 
         <p>Add New Client</p>
 
-       
+
         <div class="row">
             @using (Html.BeginForm("Create", "Clients", FormMethod.Post))
             {
@@ -147,8 +197,8 @@ function Show()
                     <br />
                     <br />
                     <input type="text" name="clientLname" class="" w3-input w3-border" placeholder="Last Name" required />
-                    
-                 
+
+
                     <br /><br />
                     <label>Citizenship</label><br />
                     <select id="nat" class="" w3-input w3-border" onchange="changeFunction()">
@@ -200,16 +250,44 @@ function Show()
 
                     <label>Requires Personal Trainer?</label>
 
-                    <input type="radio" name="personatrainer" value="Yes" /> <span>Yes</span>
-                    <span><input type="radio" name="personatrainer" value="Yes" /> No</span>
+                    <input type="radio" name="personatrainer" value="Yes" onclick="ShowTrainers()" /> <span>Yes</span>
+                    <span><input type="radio" name="personatrainer" value="No" onclick="HideTrainers()" /> No</span>
                     <br /><br />
+                    <div id="personaltrainers" style="display:none">
+                        @{
+                           <div style="padding-left:-100px">
+                                <label>Trainers</label>
+                                <ul>
+                                    @{
+                                        foreach (var e in lo.getTrainers())
+                                        {
+                                            
+                                            <li id="profile">
+                                                <img src="~/Content/user-default-grey.png" />
+                                                <p>
+                                              <span class="glyphicon glyphicon-user"></span>@e.fname
+                                                    <br />
+                                              <span class="glyphicon glyphicon-envelope"></span> @e.email
+                                                    <br />
+                                                    
+                                                </p>
+                                                <p>
+                                                    <input type="radio" name="empradio" onclick="document.getElementById('txtempid').value='@e.empID'"/>
+                                                </p>
+                                            </li>
+                                        }
+                                        
+                                    }
+                                </ul>
+                               <input type="text" name="employeeID" id="txtempid" hidden/>
+                            </div>
+                        }                       
+                    </div>
+                    
                     <button type="submit" class="w3-button w3-blue" onclick="Show()">Save Details</button>
                     <br /><br />
                 </div>
                             }
-
-
-
 
             <table class="table table-striped table-bordered">
                 <tr>
@@ -219,6 +297,8 @@ function Show()
                     <td style="font-weight:bold">Cell</td>
                     <td style="font-weight:bold">Email</td>
                     <td style="font-weight:bold">Date Registered</td>
+                    <td style="font-weight:bold">Trainer</td>
+
 
                 </tr>
                 @{
@@ -241,11 +321,18 @@ function Show()
                             <td>@e.cellno</td>
                             <td>@e.email</td>
                             <td>@e.date_reg</td>
-                            
-                            
-
+                            @{
+                                if (@lo.getTrainer(e.clientID,e.empID) != null)
+                                {
+                                    <td>@lo.getTrainer(e.clientID,e.empID).fname</td>
+                                }
+                                else
+                                {
+                                    <td>No Trainer</td>
+                                }
+                            }
                         </tr>
-                                    }
+                                }
                 }
             </table>
 
@@ -295,7 +382,7 @@ function Show()
                     </select>
                     <br />
                     <br />
-                   
+
                     <button type="submit" class="w3-button w3-blue">Save Details</button>
                     <br /><br />
                 </div>
@@ -315,7 +402,7 @@ function Show()
                     foreach (var e in lo.kin())
                     {
                         <tr>
-                            
+
                             <td>@e.Fname @e.Lname</td>
                             <td>@e.tel</td>
                             <td>@e.date_reg</td>
@@ -323,7 +410,7 @@ function Show()
                             <td></td>
 
                         </tr>
-                                }
+                    }
                 }
             </table>
 
@@ -335,24 +422,24 @@ function Show()
 
 
     @*<div id="Paris" class="w3-container city" style="border:1px solid black;width:70%;display:none">
-            <br />
-            <label>Client Occupation</label>
-    </div>*@
+                <br />
+                <label>Client Occupation</label>
+        </div>*@
 
 
-        </div>
+</div>
 
 
-        <script>
-            function openCity(cityName) {
-                var i;
-                var x = document.getElementsByClassName("city");
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                document.getElementById(cityName).style.display = "block";
-            }
-        </script>
+<script>
+    function openCity(cityName) {
+        var i;
+        var x = document.getElementsByClassName("city");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(cityName).style.display = "block";
+    }
+</script>
 
 
 

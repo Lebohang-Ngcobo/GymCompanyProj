@@ -56,6 +56,8 @@ namespace GymCompany.Controllers
         {
             if (ModelState.IsValid)
             {
+                var trainerID = Request["employeeID"].ToString();
+                client.personatrainer = trainerID;
                 client.clientID = Guid.NewGuid().ToString();
                 var empl = db.Employees.ToList().Find(x => x.email == User.Identity.Name);
                 client.empID = empl.empID;

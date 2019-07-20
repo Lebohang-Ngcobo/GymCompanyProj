@@ -9,7 +9,9 @@ namespace GymCompany.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = false;
+
         }
 
         protected override void Seed(GymCompany.Models.ApplicationDbContext context)
